@@ -1,0 +1,204 @@
+/* Base styles */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+/* Container box */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header */
+.container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+  position: relative;
+}
+
+/* Form fields */
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Select box appearance */
+form select {
+  appearance: none;
+  background: white
+    url('data:image/svg+xml;utf8,<svg fill="gray" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>')
+    no-repeat right 10px center;
+  background-size: 14px;
+}
+
+/* Button */
+form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s, transform 0.2s;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+  transform: scale(1.02);
+}
+
+/* Output box */
+.output-box {
+  margin-top: 25px;
+  background-color: #eef3ff;
+  padding: 16px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  font-size: 16px;
+  line-height: 1.5;
+  border-left: 4px solid #007bff;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow-x: auto;
+  max-height: 400px;
+  position: relative;
+}
+
+/* Typing animation indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #007bff;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Animated icon or GIF overlay */
+.animated-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  opacity: 0.6;
+}
+/* Day/Night mode styles */
+body.day-mode {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+body.night-mode {
+  background-color: #121212;
+  color: #eee;
+}
+
+body.night-mode .container {
+  background-color: #1e1e1e;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+body.night-mode form input,
+body.night-mode form select,
+body.night-mode form button {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #444;
+}
+
+body.night-mode form button {
+  background-color: #0056b3;
+  border: none;
+}
+
+body.night-mode form button:hover {
+  background-color: #003d80;
+  transform: scale(1.02);
+}
+
+body.night-mode .output-box {
+  background-color: #333;
+  border-left-color: #3399ff;
+  color: #ddd;
+}
+
+/* Override placeholder color in night mode */
+body.night-mode ::placeholder {
+  color: #aaa;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+    box-shadow: none;
+  }
+
+  form input,
+  form select,
+  form button {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .output-box {
+    font-size: 15px;
+    padding: 14px;
+  }
+
+  .animated-icon {
+    width: 40px;
+    height: 40px;
+  }
+}

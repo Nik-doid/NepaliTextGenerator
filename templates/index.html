@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ne">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nepali Text Generator</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Nepali Content Generator</h2>
+      <button
+        id="modeToggle"
+        type="button"
+        style="
+          margin-bottom: 15px;
+          width: 100%;
+          padding: 12px;
+          font-weight: bold;
+          cursor: pointer;
+        "
+      >
+        Toggle Day/Night Mode
+      </button>
+
+      <form id="generateForm">
+        <input type="text" name="topic" placeholder="Topic" required />
+        <input
+          type="text"
+          name="keywords"
+          placeholder="Keywords (comma separated)"
+        />
+        <select name="type" required>
+          <option value="story">Story</option>
+          <option value="essay">Essay</option>
+          <option value="caption">Social Caption</option>
+        </select>
+        <button type="submit">Generate</button>
+      </form>
+
+      <div id="resultBox" class="output-box"></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split("T")[0];
+        const lastSubmitDate = localStorage.getItem("submitDate");
+
+        // Elements
+        const generateForm = document.getElementById("generateForm");
+        const resultBox = document.getElementById("resultBox");
+        const modeToggleBtn = document.getElementById("modeToggle");
+
+        if (lastSubmitDate === today) {
+          generateForm.style.display = "none";
+          resultBox.style.display = "block";
+          resultBox.innerHTML =
+            "You have already submitted a request today. Please try again tomorrow.";
+        }
+
+        const savedMode = localStorage.getItem("mode") || "day";
+
+        function setMode(mode) {
+          if (mode === "night") {
+            document.body.classList.add("night-mode");
+            document.body.classList.remove("day-mode");
+          } else {
+            document.body.classList.add("day-mode");
+            document.body.classList.remove("night-mode");
+          }
+          localStorage.setItem("mode", mode);
+          modeToggleBtn.textContent =
+            mode === "night" ? "Switch to Day Mode" : "Switch to Night Mode";
+        }
+
+        setMode(savedMode);
+
+        modeToggleBtn.addEventListener("click", function () {
+          const currentMode = localStorage.getItem("mode") || "day";
+          const newMode = currentMode === "day" ? "night" : "day";
+          setMode(newMode);
+        });
+
+        $("#generateForm").submit(function (e) {
+          e.preventDefault();
+
+          resultBox.style.display = "block";
+          resultBox.innerHTML = "Generating... Please wait...";
+
+          $.post("/generate", $(this).serialize(), function (data) {
+            const today = new Date().toISOString().split("T")[0];
+            localStorage.setItem("submitDate", today);
+
+            generateForm.style.display = "none";
+            resultBox.innerHTML = `
+        <pre>${data.output}</pre>
+        <button id="newRequestBtn" style="margin-top: 15px; padding: 10px 15px; cursor: pointer;">
+          New Request
+        </button>
+      `;
+          }).fail(function (xhr) {
+            resultBox.innerHTML =
+              "Error: " + (xhr.responseJSON?.output || "Something went wrong.");
+          });
+        });
+        $("#resultBox").on("click", "#newRequestBtn", function () {
+          generateForm.style.display = "block";
+          resultBox.innerHTML = "";
+        });
+      });
+    </script>
+  </body>
+</html>
