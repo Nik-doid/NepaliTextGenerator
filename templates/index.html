@@ -96,19 +96,42 @@
 
             generateForm.style.display = "none";
             resultBox.innerHTML = `
-        <pre>${data.output}</pre>
-        <button id="newRequestBtn" style="margin-top: 15px; padding: 10px 15px; cursor: pointer;">
-          New Request
-        </button>
-      `;
+  <pre id="generatedText" style="background-color: #f4f4f4; padding: 15px; border-radius: 8px; font-family: monospace; white-space: pre-wrap;">${data.output}</pre>
+  
+  <button id="copyBtn" style="margin-top: 10px; padding: 10px 15px; cursor: pointer; border: none; background-color: #007BFF; color: white; display: flex; align-items: center; gap: 8px; border-radius: 5px;">
+    <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="white">
+      <path d="M0 0h24v24H0V0z" fill="none"/>
+      <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"/>
+    </svg>
+    Copy Text
+  </button>
+  
+  <button id="newRequestBtn" style="margin-top: 10px; padding: 10px 15px; cursor: pointer; border: none; background-color: #28A745; color: white; display: flex; align-items: center; gap: 8px; border-radius: 5px;">
+    <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="white">
+      <path d="M0 0h24v24H0V0z" fill="none"/>
+      <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.54-.59 2.94-1.54 4L18 17.9C19.23 16.4 20 14.3 20 12c0-4.42-3.58-8-8-8zm-6 6c0-1.54.59-2.94 1.54-4L6 6.1C4.77 7.6 4 9.7 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3c-3.31 0-6-2.69-6-6z"/>
+    </svg>
+    New Request
+  </button>
+`;
           }).fail(function (xhr) {
             resultBox.innerHTML =
               "Error: " + (xhr.responseJSON?.output || "Something went wrong.");
           });
         });
         $("#resultBox").on("click", "#newRequestBtn", function () {
-          generateForm.style.display = "block";
-          resultBox.innerHTML = "";
+          window.location.reload();
+        });
+        $("#resultBox").on("click", "#copyBtn", function () {
+          const text = document.getElementById("generatedText").innerText;
+          navigator.clipboard
+            .writeText(text)
+            .then(() => {
+              alert("Text copied to clipboard!");
+            })
+            .catch((err) => {
+              alert("Failed to copy text.");
+            });
         });
       });
     </script>

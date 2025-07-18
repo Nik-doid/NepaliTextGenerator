@@ -20,7 +20,7 @@ if not GROQ_API_KEY:
 # Initialize Flask app
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-CORS(app)  # Enable CORS if you're using this across domains
+CORS(app)  # Enable CORS for cross-domain requests
 
 # Logging setup
 logging.basicConfig(level=logging.INFO)
@@ -35,11 +35,17 @@ def generate_nepali_text(prompt):
     data = {
         "model": GROQ_MODEL,
         "messages": [
-            {"role": "system", "content": "You are a helpful assistant that writes in Nepali."},
-            {"role": "user", "content": prompt}
+            {
+                "role": "system",
+                "content": "तपाईं एक सहायक लेखक हुनुहुन्छ जसले नेपाली भाषामा मात्र उत्तर दिनुहुन्छ।"
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
         ],
         "temperature": 0.7,
-        "max_tokens": 500
+        "max_tokens": 1000
     }
 
     try:
@@ -63,7 +69,8 @@ def generate():
     if not topic or content_type not in ['story', 'essay', 'caption']:
         return jsonify({"output": "Invalid input provided."}), 400
 
-    prompt = f"Generate a {content_type} in Nepali on the topic '{topic}'. Include these keywords: {keywords}."
+    # Build the prompt in Nepali to encourage Nepali-language response
+    prompt = f"कृपया '{topic}' शीर्षकमा एउटा {content_type} नेपाली भाषामा लेख्नुहोस्। निम्न शब्दहरू समावेश गर्नुहोस्: {keywords}।"
 
     result = generate_nepali_text(prompt)
     return jsonify({"output": result})
