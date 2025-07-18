@@ -96,7 +96,8 @@
 
             generateForm.style.display = "none";
             resultBox.innerHTML = `
-  <pre id="generatedText" style="background-color: #f4f4f4; padding: 15px; border-radius: 8px; font-family: monospace; white-space: pre-wrap;">${data.output}</pre>
+  <pre id="generatedText" class="generated-text">
+${data.output}</pre>
   
   <button id="copyBtn" style="margin-top: 10px; padding: 10px 15px; cursor: pointer; border: none; background-color: #007BFF; color: white; display: flex; align-items: center; gap: 8px; border-radius: 5px;">
     <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18" fill="white">

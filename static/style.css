@@ -138,6 +138,23 @@ body.day-mode {
   background-color: #f4f4f4;
   color: #333;
 }
+/* Default (day mode) style */
+.generated-text {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  color: #000;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* Dark mode overrides */
+body.night-mode .generated-text {
+  background-color: #1e1e1e;
+  color: #eee;
+}
 
 body.night-mode {
   background-color: #121212;
