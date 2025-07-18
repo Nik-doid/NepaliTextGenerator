@@ -53,3 +53,6 @@ GROQ_API_KEY="your_api_key_here"
 python app.py
 
 ```
+
+## Try it here 
+[Nepali Text Generatpr](https://nepalitextgenerator.onrender.com)
