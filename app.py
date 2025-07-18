@@ -44,7 +44,7 @@ def generate_nepali_text(prompt):
                 "content": prompt
             }
         ],
-        "temperature": 0.7,
+        "temperature": 0.9,
         "max_tokens": 1000
     }
 
